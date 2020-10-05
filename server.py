@@ -15,9 +15,11 @@ from src.services.transmissionConstraintsHandler import TransmissionConstraintsC
 from src.services.ictConstraintsHandler import IctConstraintsCreationHandler
 from src.services.highVoltageNodeCreationHandler import HighVoltageNodeCreationHandler
 from src.services.lowVoltageNodeCreationHandler import LowVoltageNodeCreationHandler
+from src.fetcherServices.iegcViolMsgsFetcher import IegcviolMsgsFetcherHandler
 import datetime as dt
 import pandas as pd
 import json
+import requests
 import os
 from waitress import serve
 
@@ -230,6 +232,24 @@ def createLowVoltageNode():
         return render_template('createLowVoltageNode.html.j2', data={'message': json.dumps(resp)})
     # in case of get request just return the html template
     return render_template('createLowVoltageNode.html.j2')
+
+
+@app.route('/fetchIegcViolMsgs', methods=['GET', 'POST'])
+def fetchIegcViolMsgs():
+    # in case of post request, create raw pair angles and return json response
+    if request.method == 'POST':
+        startDate = request.form.get('startDate')
+        endDate = request.form.get('endDate')
+        iegcViolMsgsFetcher = IegcviolMsgsFetcherHandler(
+            appConfig['iegcViolMsgsFetcherServiceUrl'])
+        startDate = dt.datetime.strptime(startDate, '%Y-%m-%d')
+        endDate = dt.datetime.strptime(endDate, '%Y-%m-%d')
+        resp = iegcViolMsgsFetcher.fetchIegcviolMsgs(startDate, endDate)
+        msg= resp['data']
+        print(resp)
+        return render_template('fetchIegcMsgs.html.j2', msgData= msg)
+    # in case of get request just return the html template
+    return render_template('fetchIegcMsgs.html.j2')
 
 
 if __name__ == '__main__':
