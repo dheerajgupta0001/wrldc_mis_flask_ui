@@ -72,6 +72,9 @@
     <script type="text/javascript" src="{{ url_for('static', filename='node_modules/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='node_modules/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='node_modules/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='node_modules/jszip/dist/jszip.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='node_modules/pdfmake/build/pdfmake.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='node_modules/pdfmake/build/vfs_fonts.js') }}"></script>
     <script>
     $(document).ready(function() {
         // Setup - add a text input to each footer cell
@@ -86,7 +89,7 @@
             "pageLength": 50,
             dom: 'Bfrtip',
             "order": [[0, "asc"]],
-            buttons: ['pageLength']
+            buttons: ['pageLength', 'csv', 'excel', 'pdf', 'print']
         });
         var r = $('#example tfoot tr');
         r.find('th').each(function () {
