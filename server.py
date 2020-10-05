@@ -246,7 +246,6 @@ def fetchIegcViolMsgs():
         endDate = dt.datetime.strptime(endDate, '%Y-%m-%d')
         resp = iegcViolMsgsFetcher.fetchIegcviolMsgs(startDate, endDate)
         msg= resp['data']
-        print(resp)
         return render_template('fetchIegcMsgs.html.j2', msgData= msg)
     # in case of get request just return the html template
     return render_template('fetchIegcMsgs.html.j2')
