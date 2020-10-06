@@ -22,6 +22,7 @@ import json
 import requests
 import os
 from waitress import serve
+from src.routeControllers.iegcViolMsgs import fetchIegcViolMsgsPage
 
 app = Flask(__name__)
 
@@ -42,6 +43,8 @@ app.config['UPLOAD_EXTENSIONS'] = ['.xlsx']
 def hello():
     return render_template('home.html.j2')
 
+#blueprint trial
+app.register_blueprint(fetchIegcViolMsgsPage, url_prefix='/iegcViolMsgs')
 
 @app.route('/createRawOutages', methods=['GET', 'POST'])
 def createRawOutages():
@@ -232,23 +235,6 @@ def createLowVoltageNode():
         return render_template('createLowVoltageNode.html.j2', data={'message': json.dumps(resp)})
     # in case of get request just return the html template
     return render_template('createLowVoltageNode.html.j2')
-
-
-@app.route('/fetchIegcViolMsgs', methods=['GET', 'POST'])
-def fetchIegcViolMsgs():
-    # in case of post request, create raw pair angles and return json response
-    if request.method == 'POST':
-        startDate = request.form.get('startDate')
-        endDate = request.form.get('endDate')
-        iegcViolMsgsFetcher = IegcviolMsgsFetcherHandler(
-            appConfig['iegcViolMsgsFetcherServiceUrl'])
-        startDate = dt.datetime.strptime(startDate, '%Y-%m-%d')
-        endDate = dt.datetime.strptime(endDate, '%Y-%m-%d')
-        resp = iegcViolMsgsFetcher.fetchIegcviolMsgs(startDate, endDate)
-        msg= resp['data']
-        return render_template('fetchIegcMsgs.html.j2', msgData= msg)
-    # in case of get request just return the html template
-    return render_template('fetchIegcMsgs.html.j2')
 
 
 if __name__ == '__main__':

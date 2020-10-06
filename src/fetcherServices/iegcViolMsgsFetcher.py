@@ -22,8 +22,8 @@ class IegcviolMsgsFetcherHandler():
             "startDate": dt.datetime.strftime(startDate, '%Y-%m-%d'),
             "endDate": dt.datetime.strftime(endDate, '%Y-%m-%d')
         }
-        res = requests.post(self.iegcViolMsgsFetcherUrl,
-                            json=createIegcViolMsgsPayload)
+        res = requests.get(self.iegcViolMsgsFetcherUrl,
+                            params=createIegcViolMsgsPayload)
 
         operationResult: IegcViolMsgsFetcherResp = {
             "isSuccess": False,
