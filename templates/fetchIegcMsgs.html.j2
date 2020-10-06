@@ -8,25 +8,23 @@
 {% block content %}
 <h1>Fetch IEGC Violation Messages</h1>
 <div class="row align-content-center">
-    <div class="col-md-4">
-        <form class="form-inline" action="/fetchIegcViolMsgs" method="POST">
-            <label for="startDate">Start Date</label>
-            <input name="startDate" class="form-inline bg-light border-1 mr-2" type="date" />
-            <label for="endDate">End Date</label>
-            <input name="endDate" class="form-inline bg-light border-1 mr-3" type="date" />
-            <button id="fetchIegcViolMsgsBtn" class="btn btn-success btn-icon-split">
-                <span class="icon text-white-50">
-                    <i class="fas fa-sync"></i>
-                </span>
-                <span class="text">Show Data</span>
-            </button>
-        </form>
-    </div>
+    <form class="form-inline" action="/fetchIegcViolMsgs" method="POST">
+        <label for="startDate">Start Date</label>
+        <input name="startDate" class="form-inline bg-light border-1 mr-2" type="date" />
+        <label for="endDate">End Date</label>
+        <input name="endDate" class="form-inline bg-light border-1 mr-3" type="date" />
+        <button id="fetchIegcViolMsgsBtn" class="btn btn-success btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-sync"></i>
+            </span>
+            <span class="text">Show Data</span>
+        </button>
+    </form>
 </div>
 
 {% if msgData%}
     <div>
-        <table id="example" class="table" cellspacing="5" width="70%">
+        <table id="example" class="table table-bordered table-hover display w-auto">
             <thead>
                 <tr>
                 <th class="th-sm">Messages</th>
